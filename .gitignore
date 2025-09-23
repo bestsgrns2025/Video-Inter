@@ -2,11 +2,11 @@
 # Dependencies
 /node_modules
 /client/node_modules
-/server/node_modules
+
 
 # Environment variables
 .env
-server/.env
+backend/.env
 client/.env
 
 # Build output
