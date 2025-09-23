@@ -1,4 +1,6 @@
+// Load environment variables
 require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -33,7 +35,11 @@ app.use('/api/auth', authRoutes);
 const PORT = process.env.PORT || 5000;
 
 // MongoDB URI
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://video_25:Video_2025@cluster0.l8c6jfa.mongodb.net/videoInterviewDB?retryWrites=true&w=majority&appName=Cluster0";
+const MONGO_URI = process.env.MONGO_URI;
+if (!MONGO_URI) {
+    console.error("❌ MONGO_URI is missing! Set it in Render Environment Variables or local .env file.");
+    process.exit(1);
+}
 
 // Connect to MongoDB
 mongoose.connect(MONGO_URI)
@@ -49,3 +55,13 @@ mongoose.connect(MONGO_URI)
         console.error('❌ MongoDB connection error:', err.message);
         console.error(err);
     });
+
+// Debug: check environment variables
+console.log("🔹 Loaded Environment Variables:");
+console.log({
+    PORT: process.env.PORT,
+    MONGO_URI: MONGO_URI ? "Loaded ✅" : "Missing ❌",
+    JWT_SECRET: process.env.JWT_SECRET ? "Loaded ✅" : "Missing ❌",
+    EMAIL_HOST: process.env.EMAIL_HOST || "Not Set",
+    EMAIL_USER: process.env.EMAIL_USER || "Not Set",
+});
