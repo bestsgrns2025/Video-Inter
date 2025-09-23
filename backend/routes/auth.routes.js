@@ -8,7 +8,7 @@ const {
     resetPassword,
     confirmYes,
     confirmNo,
-} = require('./controllers/auth.controller.js');
+} = require('../controllers/auth.controller.js');
 
 router.post('/signup', signup);
 router.post('/signin', signin);
