@@ -5,7 +5,7 @@ import SignUp from './components/Auth/SignUp';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import ResetPassword from './components/Auth/ResetPassword';
 import Dashboard from './pages/Dashboard';
-import EmailConfirmed from './pages/EmailConfirmed';
+import ConfirmEmail from './pages/EmailConfirmed';
 import ConfirmationRejected from './pages/ConfirmationRejected';
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/email-confirmed" element={<EmailConfirmed />} />
+      <Route path="/email-confirmed" element={<ConfirmEmail />} />
       <Route path="/confirmation-rejected" element={<ConfirmationRejected />} />
     </Routes>
   );
