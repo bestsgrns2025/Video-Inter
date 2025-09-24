@@ -68,10 +68,12 @@ router.get('/confirm/:token', async (req, res) => {
     user.confirmed = true;
     await user.save();
 
-    // Redirect to your frontend signin page
-    res.redirect(`${process.env.VITE_API_URL.replace('/api/auth','')}/signin?confirmed=true`);
+    // ✅ Redirect to frontend SignIn page with success message
+    const frontendURL = process.env.VITE_API_URL.replace('/api/auth','');
+    res.redirect(`${frontendURL}/signin?confirmed=true`);
   } catch (err) {
-    res.redirect(`${process.env.VITE_API_URL.replace('/api/auth','')}/signin?error=invalid_token`);
+    const frontendURL = process.env.VITE_API_URL.replace('/api/auth','');
+    res.redirect(`${frontendURL}/signin?error=invalid_token`);
   }
 });
 
