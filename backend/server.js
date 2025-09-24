@@ -38,8 +38,8 @@ app.use('/api/auth', authRoutes);
 const clientDistPath = path.join(__dirname, '../client/dist');
 app.use(express.static(clientDistPath));
 
-// Change '*' to '/*'
-app.get('/*', (req, res) => {
+// This handles all routes for React
+app.use((req, res) => {
   res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
