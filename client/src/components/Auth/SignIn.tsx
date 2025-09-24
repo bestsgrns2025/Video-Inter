@@ -1,6 +1,5 @@
-
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { signin } from '../../services/auth';
 
 const SignIn = () => {
@@ -9,6 +8,16 @@ const SignIn = () => {
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+
+    useEffect(() => {
+        // Show message if redirected after email confirmation
+        if (searchParams.get('confirmed') === 'true') {
+            setMessage('✅ Email confirmed! You can now log in.');
+        } else if (searchParams.get('error')) {
+            setError('❌ Invalid or expired confirmation link.');
+        }
+    }, [searchParams]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -18,8 +27,8 @@ const SignIn = () => {
         try {
             const res = await signin({ email, password });
             localStorage.setItem('token', res.data.token);
-            navigate('/dashboard'); // Redirect to a protected route
-        } catch (err: any) { // Explicitly type err as any
+            navigate('/dashboard'); // Redirect to protected route
+        } catch (err: any) {
             if (err.response && err.response.data && err.response.data.msg) {
                 setError(err.response.data.msg);
             } else {
