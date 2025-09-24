@@ -39,7 +39,7 @@ const clientDistPath = path.join(__dirname, '../client/dist');
 app.use(express.static(clientDistPath));
 
 // This handles all routes for React
-app.use((req, res) => {
+app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
