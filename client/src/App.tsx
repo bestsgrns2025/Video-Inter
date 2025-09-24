@@ -17,7 +17,7 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/email-confirmed" element={<ConfirmEmail />} />
+      <Route path="/confirm/:token" element={<ConfirmEmail />} />
       <Route path="/confirmation-rejected" element={<ConfirmationRejected />} />
     </Routes>
   );
