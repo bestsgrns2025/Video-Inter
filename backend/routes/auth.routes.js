@@ -63,17 +63,17 @@ router.get('/confirm/:token', async (req, res) => {
     const { token } = req.params;
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.userId);
-    if (!user) return res.status(400).send('Invalid token');
+    if (!user) {
+      return res.redirect(`${process.env.VITE_CLIENT_URL}/signin?error=invalid_token`);
+    }
 
     user.confirmed = true;
     await user.save();
 
-    // ✅ Redirect to frontend SignIn page with success message
-    const frontendURL = process.env.VITE_API_URL.replace('/api/auth','');
-    res.redirect(`${frontendURL}/signin?confirmed=true`);
+    // Redirect to SignIn page with query param
+    return res.redirect(`${process.env.VITE_CLIENT_URL}/signin?confirmed=true`);
   } catch (err) {
-    const frontendURL = process.env.VITE_API_URL.replace('/api/auth','');
-    res.redirect(`${frontendURL}/signin?error=invalid_token`);
+    return res.redirect(`${process.env.VITE_CLIENT_URL}/signin?error=invalid_token`);
   }
 });
 
