@@ -62,20 +62,16 @@ router.get('/confirm/:token', async (req, res) => {
   try {
     const { token } = req.params;
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const user = await User.findById(decoded.userId);
     if (!user) return res.status(400).send('Invalid token');
 
-    // Mark as confirmed
-    if (user.confirmed) return res.send('Email already confirmed!');
     user.confirmed = true;
     await user.save();
 
-    res.send('✅ Email confirmed! You can now login.');
-
+    // Redirect to your frontend signin page
+    res.redirect(`${process.env.VITE_API_URL.replace('/api/auth','')}/signin?confirmed=true`);
   } catch (err) {
-    console.error(err);
-    res.status(400).send('Invalid or expired token');
+    res.redirect(`${process.env.VITE_API_URL.replace('/api/auth','')}/signin?error=invalid_token`);
   }
 });
 
