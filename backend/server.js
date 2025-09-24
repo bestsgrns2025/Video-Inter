@@ -10,21 +10,18 @@ const authRoutes = require('./routes/auth.routes');
 const app = express();
 
 const allowedOrigins = [
-  'http://localhost:5173', // Vite dev server
-  'https://video-interview-app-2.onrender.com' // Your Render frontend
+  'https://video-interview-app-2.onrender.com'
 ];
 
 app.use(cors({
   origin: function(origin, callback){
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if(!origin) return callback(null, true);
+    if(!origin) return callback(null, true); // allow non-browser requests
     if(allowedOrigins.indexOf(origin) === -1){
-      const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
-      return callback(new Error(msg), false);
+      return callback(new Error('CORS blocked'), false);
     }
     return callback(null, true);
   },
-  credentials: true,
+  credentials: true
 }));
 
 // Middleware
