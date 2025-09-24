@@ -37,7 +37,7 @@ router.post('/signup', async (req, res) => {
     });
 
     // Email confirmation URL
-    const confirmUrl = `${process.env.VITE_API_URL.replace('/api/auth', '')}/confirm/${token}`;
+    const confirmUrl = `${process.env.VITE_API_URL}/confirm/${token}`;
 
     // Send email
     await transporter.sendMail({
