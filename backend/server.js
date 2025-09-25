@@ -10,7 +10,8 @@ const authRoutes = require('./routes/auth.routes');
 const app = express();
 
 const allowedOrigins = [
-  'https://video-interview-app-2.onrender.com'
+  'https://video-interview-app-2.onrender.com',
+  'http://localhost:5173'
 ];
 
 app.use(cors({
