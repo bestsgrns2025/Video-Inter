@@ -1,9 +1,11 @@
+
 import axios from 'axios';
 
-// Use VITE_API_URL from environment variables, fallback to localhost for dev
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/auth';
+const API_URL = 'http://localhost:5000/api/auth';
 
-export const signup = (data: any) => axios.post(`${API_URL}/signup`, data);
+export const signup = (data: any) => {
+    return axios.post(`${API_URL}/signup`, data);
+};
 
 export const signin = (data: any) => {
     return axios.post(`${API_URL}/signin`, data);

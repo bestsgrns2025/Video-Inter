@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../../services/auth';
@@ -18,6 +17,12 @@ const SignUp = () => {
 
         if (password !== confirmPassword) {
             setError('Passwords do not match');
+            return;
+        }
+
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{10}$/;
+        if (!passwordRegex.test(password)) {
+            setError('Password must be 10 characters long, with at least one uppercase letter, one number, one special character, and no spaces.');
             return;
         }
 
