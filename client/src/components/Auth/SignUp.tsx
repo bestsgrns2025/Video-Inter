@@ -21,6 +21,16 @@ const SignUp = () => {
             return;
         }
 
+        const validatePassword = (password: string) => {
+            const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z]).{1,10}$/;
+            return regex.test(password);
+        };
+
+        if (!validatePassword(password)) {
+            setError('Password must contain at least one special character, one capital letter, one number, and be a maximum of 10 characters long.');
+            return;
+        }
+
         try {
             const res = await signup({ email, password });
             setMessage(res.data.msg);

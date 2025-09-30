@@ -1,4 +1,3 @@
-
 const User = require('../models/User.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -14,8 +13,17 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+const validatePassword = (password) => {
+    const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z]).{1,10}$/;
+    return regex.test(password);
+};
+
 exports.signup = async (req, res) => {
     const { email, password } = req.body;
+
+    if (!validatePassword(password)) {
+        return res.status(400).json({ msg: 'Password must contain at least one special character, one capital letter, one number, and be a maximum of 10 characters long.' });
+    }
 
     try {
         let user = await User.findOne({ email });
@@ -160,6 +168,10 @@ exports.forgotPassword = async (req, res) => {
 exports.resetPassword = async (req, res) => {
     const { password } = req.body;
     const token = req.params.token;
+
+    if (!validatePassword(password)) {
+        return res.status(400).json({ msg: 'Password must contain at least one special character, one capital letter, one number, and be a maximum of 10 characters long.' });
+    }
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
