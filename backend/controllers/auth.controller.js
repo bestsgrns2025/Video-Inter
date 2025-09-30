@@ -1,3 +1,4 @@
+
 const User = require('../models/User.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -17,11 +18,6 @@ exports.signup = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{10}$/;
-        if (!passwordRegex.test(password)) {
-            return res.status(400).json({ msg: 'Password must be 10 characters long, with at least one uppercase letter, one number, one special character, and no spaces.' });
-        }
-
         let user = await User.findOne({ email });
         if (user) {
             return res.status(400).json({ msg: 'User already exists' });
