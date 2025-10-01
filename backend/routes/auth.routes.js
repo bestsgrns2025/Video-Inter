@@ -17,7 +17,7 @@ const safe = (fn) => (req, res, next) => {
     console.error('API Error:', err);
     res.status(500).json({ msg: 'Internal server error' });
   });
-});
+};
 
 router.post('/signup', safe(signup));
 router.post('/signin', safe(signin));
