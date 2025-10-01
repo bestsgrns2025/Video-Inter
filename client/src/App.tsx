@@ -7,6 +7,9 @@ import ResetPassword from './components/Auth/ResetPassword';
 import Dashboard from './pages/Dashboard';
 import EmailConfirmed from './pages/EmailConfirmed';
 import ConfirmationRejected from './pages/ConfirmationRejected';
+import AdminLogin from './components/Auth/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
+import ViewUsers from './pages/ViewUsers';
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/email-confirmed" element={<EmailConfirmed />} />
       <Route path="/confirmation-rejected" element={<ConfirmationRejected />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/users" element={<ViewUsers />} />
     </Routes>
   );
 }

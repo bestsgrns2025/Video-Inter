@@ -187,3 +187,47 @@ exports.resetPassword = async (req, res) => {
         res.status(400).send('Invalid token');
     }
 };
+
+exports.adminLogin = async (req, res) => {
+    const { email, password } = req.body;
+
+    // In a real-world application, you would have a separate admin collection or role-based access control.
+    // For this example, we'll use a static admin user.
+    if (email !== process.env.ADMIN_EMAIL || password !== process.env.ADMIN_PASSWORD) {
+        return res.status(400).json({ msg: 'Invalid admin credentials' });
+    }
+
+    const payload = {
+        user: {
+            id: 'admin',
+        },
+    };
+
+    jwt.sign(
+        payload,
+        process.env.JWT_SECRET,
+        { expiresIn: 3600 },
+        (err, token) => {
+            if (err) throw err;
+            res.json({ token });
+        }
+    );
+};
+
+exports.getUsers = async (req, res) => {
+    try {
+        const users = await User.find().select('-password');
+        const formattedUsers = users.map(user => {
+            const userObject = user.toObject();
+            const createdAt = user.createdAt || user._id.getTimestamp();
+            return {
+                ...userObject,
+                createdAt: createdAt.toLocaleString(),
+            };
+        });
+        res.json(formattedUsers);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Backend error');
+    }
+};

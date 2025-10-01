@@ -18,3 +18,11 @@ export const forgotPassword = (data: any) => {
 export const resetPassword = (data: any, token: string) => {
     return axios.post(`${API_URL}/reset-password/${token}`, data);
 };
+
+export const adminLogin = (data: any) => {
+    return axios.post(`${API_URL}/admin/login`, data);
+};
+
+export const getUsers = () => {
+    return axios.get(`${API_URL}/users`);
+};
