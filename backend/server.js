@@ -8,21 +8,11 @@ const authRoutes = require('./routes/auth.routes');
 const app = express();
 
 // ---------------------- CORS Setup ----------------------
-const allowedOrigins = [
-  process.env.FRONTEND_URL || 'http://localhost:5173', // deployed frontend or local dev
-];
-
+const allowedOrigins = [process.env.FRONTEND_URL || 'http://localhost:5173'];
 app.use(cors({
   origin: (origin, callback) => {
-    // allow Postman / curl (no origin)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      console.warn('Blocked CORS request from:', origin);
-      return callback(null, false);
-    }
+    if (!origin) return callback(null, true); // mobile apps, curl
+    return allowedOrigins.includes(origin) ? callback(null, true) : callback(null, false);
   },
   credentials: true,
 }));
